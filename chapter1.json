@@ -1,0 +1,110 @@
+{
+    "1.1": {
+        "description": ["Seagulls are happy birds, you think. Such a good life, roam the skies above calm oceans, dive in occasionally for a swim and lunch, call out to your friends, rest atop an unsuspecting bouy, then take off again. What do they think of us, you think, when they see us, walking around anchored to the sand like an absolute peasant, or in our fast nests that zip across the water but oh so never touch the clouds?", "What would they think of me, sprawled out awkwardly on this island in the middle of the ocean?", "Your eyes snap open."],
+        "prompt": "What do you do?",
+        "options": [
+            {
+                "optionText": "look around",
+                "optionResponse": "1.2",
+                "optionType": "once"
+            },
+            {
+                "optionText": "nothing",
+                "optionResponse": ["You do nothing for a while. It feels good to not be worried about \"doing\" anything, you know. Who said humans HAVE to do something all the time? NO, you say to yourself, enough of that bullshit. You lay peacefully under the sun.", "Hold on, the SUN?"],
+                "optionType": "persist"
+            },
+            {
+                "optionText": "get up",
+                "optionResponse": "1.3",
+                "optionType": "persist"
+            },
+            {
+                "optionText": "close eyes",
+                "optionResponse": ["You close your eyes right back. Surely, you're in your bed, right where you last were. This is some weird dream-reality mix that happens when you randomly wake up, like catching your brain with its pants down. It'll all feel better, just need to give it a few months to dress up and zip up.", "Slowly, gently, deliberately, you crack your eyes open again.", "Yeah, you're definitely not in your bed."],
+                "optionType": "persist"
+            }
+        ]
+    },
+    "1.2": {
+        "description": ["You're blinded by the sheer abundance of light. You rub your eyes, and as they adjust, a sandy landscape materializes, littered with grass, with a wall of towering palm trees ahead of you. Behind you, the sea moves lazily around the shore.","A seagull settles atop a rock, staring curiously at you. In the skies above, its cousins roam aimlessly."],
+        "addOptions": [
+            {
+                "optionText": "say hi to seagull",
+                "optionResponse": ["\"Hi\", you mouth but only sand and seaweed fall out as you cough violently. The seagull launches off its rock and disappears in the sky.","That went well."],
+                "optionType": "once"
+            }
+        ],
+        "addOptionsTo": "1.1",
+        "goToCheckpoint": "1.1"
+    },
+    "1.3": {
+        "description": ["Your palms sink into the hot sand as you push yourself upright, dirt tumbling down your clothes. They are torn and greasy. Your head feels like lead, and your brain is telling you about pain, but not from where. You try to remember what's happening when you realize the pain is coming from all over your body, as if a roadroller crawled over you.","You see your legs but you're sure they won't work for a good minute, but try anyways. What is happening? Where are you? As you struggle to your feet, you realize your pockets are filled with something. Stretching your aching back, you spot a broken motorboat in the distance, and a path into the trees ahead of you."],
+        "options": [
+            {
+                "optionText": "check pockets",
+                "optionResponse": "1.4",
+                "optionType": "once"
+            }
+        ]
+    },
+    "1.4": {
+        "description": ["You empty your pockets. More lumps of wet sand spill out. Also fall out a bunch of cards, a dripping wet lighter and a blunt knife."],
+        "options": [
+            {
+                "optionText": "inspect cards",
+                "optionResponse": "1.5",
+                "optionType": "once"
+            },
+            {
+                "optionText": "inspect lighter",
+                "optionResponse": "1.6",
+                "optionType": "once"
+            },
+            {
+                "optionText": "inspect knife",
+                "optionResponse": "1.7",
+                "optionType": "once"
+            }
+        ]
+    },
+    "1.5": {
+        "description": ["You see a smudged driving license, the name and photo unclear. Possibly yours? You've never been big on driving anyway. \"Metal death boxes\", you call them. \"That's a good band name\". Your spry moped is good enough for any destination in the world. Alas, it's probably in a different part of the planet right now, if this even is Earth. You don't know, you're doubting every second of existence.","Second is a cracked debit card. Your faithful debit card. How many shopping sprees and immoderate partying has it accompanied you! All those good times, except the worried calls from your CA. That chap could use some booze, you think. Ah, but look at it now, cracks all over like a cutting board. Even the tiny chip has broken. Yeah, this card's only future is to pry open doors. If they even have doors here. \"Door, he he\" you muse, \"funny word. Door. Dor. Duur. Duuuur.\" You're totally fine.","To your amusement, the last one is a playing card: A jack of spades. This isn't yours. Playing cards is for kids. Legends play UNO. You own neither. Maybe you ARE the jack, and if you had a spade right now, you'd dig yourself a cozy little pit of your length and make some sand blankets to go over it."],
+        "addToInventory": ["Driving License", "Debit Card (cracked)", "Playing Card (Jack of Spades)"],
+        "addOptions": [
+            {
+                "optionText": "open inventory",
+                "optionType": "persist"
+            }
+        ],
+        "addOptionsTo": "1.4",
+        "goToCheckpoint": "1.4"
+    },
+    "1.6": {
+        "description": ["This is a lighter. Not yours, but one of the best things to find on yourself in the wild. The ultimate tool. It being wet, though, is a slight complication. \"Maybe it'll dry itself out, how do lighters work?\" you say to yourself.","There's a symbol on it, a kind of skull and bones, but the skull is a cocunut and the bones are snakes? You think the graphic designer is a lazy toadstool."],
+        "addToInventory": ["Lighter (wet) with coconut and snakes"],
+        "addOptions": [
+            {
+                "optionText": "open inventory",
+                "optionType": "persist"
+            }
+        ],
+        "addOptionsTo": "1.4",
+        "goToCheckpoint": "1.4"
+    },
+    "1.7": {
+        "description": ["A knife? A whole frickin' KNIFE? How does a KNIFE get in someone's pants? This KNIFE got more game than everyone on this planet combined! Which wouldn't be saying much if this is not Earth and there's only one person on this planet, you. \"It still has more game than me\" you bemuse. \"Why do I think this is not Earth?\"","Not much more to say about the knife itself. Strong blade, but blunt to the cheek. Worn out plastic grip. \"Plastic, AHA!\" you shout. \"Earth!\" You need to stop."],
+        "addToInventory": ["Knife (blunt)"],
+        "addOptions": [
+            {
+                "optionText": "open inventory",
+                "optionType": "persist"
+            }
+        ],
+        "addOptionsTo": "1.4",
+        "goToCheckpoint": "1.4"
+    },
+    "1.20": {
+        "description": ["Your palms sink into the hot sand as you push yourself upright, dirt tumbling down your clothes. They are torn and greasy. Your head feels like lead, and your brain is telling you about pain, but not from where. You try to remember what's happening when you realize the pain is coming from all over your body, as if a roadroller crawled over you.","You see your legs but you're sure they won't work for a good minute, but try anyways. What is happening? Where are you? As you struggle to your feet, you realize your pockets are filled with something. Stretching your aching back, you spot a broken motorboat in the distance, and a path into the trees ahead of you."],
+        "nextChapterCheckpoint": "2.1"
+    }
+}
