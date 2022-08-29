@@ -1,8 +1,8 @@
-from multiprocessing.dummy import Array
 import traceback
 from typing import List
-import globals
 import json
+
+import globals
 
 def printDescription(descTexts):
     for descText in descTexts:
