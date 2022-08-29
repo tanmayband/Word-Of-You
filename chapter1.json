@@ -20,7 +20,7 @@
             },
             {
                 "optionText": "close eyes",
-                "optionResponse": ["You close your eyes right back. Surely, you're in your bed, right where you last were. This is some weird dream-reality mix that happens when you randomly wake up, like catching your brain with its pants down. It'll all feel better, just need to give it a few months to dress up and zip up.", "Slowly, gently, deliberately, you crack your eyes open again.", "Yeah, you're definitely not in your bed."],
+                "optionResponse": ["You close your eyes right back. Surely, you're in your bed, right where you last were. This is some weird dream-reality mix that happens when you randomly wake up, like catching your brain with its pants down. It'll all feel better, just need to give it a few moments to dress up and zip up.", "Slowly, gently, deliberately, you crack your eyes open again.", "Yeah, you're definitely not in your bed."],
                 "optionType": "persist"
             }
         ]
