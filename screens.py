@@ -18,10 +18,14 @@ def showMainMenu():
 
 def showGameScreen(prevScrDet):
     def gameScreenInput(inputResponse):
-        print(f"game input: {inputResponse}")
         if(inputResponse and len(inputResponse) > 0):
-            utils.loadCheckpoint(inputResponse)
-            screenDetails.updateTempCommands(globals.currentChapterCheckpointOptions)
+            if(inputResponse[0].isnumeric()):
+                utils.loadCheckpoint(inputResponse)
+                screenDetails.updateTempCommands(globals.currentChapterCheckpointOptions)
+
+            elif(inputResponse == globals.commandOpenInventory):
+                globals.isInventoryOpen = True
+                print("the inventory is not here yet. they said one-day delivery, absolute noobs. you'll see it when we see it. END OF DEMO")
 
     globals.currentScreenDetails = Screen.GAME
     print(f"\n------------------------------\n--- YOUR ADVENTURE AWAITS! ---\n------------------------------")
@@ -35,7 +39,7 @@ def showGameScreen(prevScrDet):
     for option in screenDetails.screenCommands:
         print(f"- {option}")
 
-    gameScreenInput("1.1")
+    gameScreenInput(globals.currentChapterCheckpointId)
     return screenDetails
 
     # inputResponse = "1.1"

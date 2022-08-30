@@ -17,9 +17,13 @@ def mainLoop():
         inputResponse = ""
         while(inputResponse != globals.commandExitGame):
             currentScreenDetails = globals.currentScreenDetails
+
             if(currentScreenDetails.inputProcessor):
                 currentScreenDetails.inputProcessor(inputResponse)
             inputResponse = utils.processInput()
+            
+            if(inputResponse == globals.commandList):
+                inputResponse = ""
 
         if(inputResponse == globals.commandExitGame):
             globals.currentScreenDetails = globals.exitScreenDetails

@@ -13,15 +13,20 @@ def printPrompt(promptText):
         print(f"> {promptText}")
 
 def printOptions(optionsList):
-    for optionObj in optionsList:
-        print(f"- {optionObj['optionText']}")
+    for optionText in optionsList:
+        print(f"- {optionText}")
 
-def addOptions(newOptionsList, oldOptionsList):
+def addOptionsToCheckpoint(newOptionsList, oldOptionsList):
     oldOptionTexts = [option["optionText"] for option in oldOptionsList]
     for newOption in newOptionsList:
-        if(newOption["optionText"] not in oldOptionTexts):
+        if(newOption["optionType"] != "persist" and newOption["optionText"] not in oldOptionTexts):
             oldOptionsList.append(newOption)
     return oldOptionsList
+
+def addOptionsToScreen(newOptionsList):
+    for addOption in newOptionsList:
+        if(addOption["optionType"] == "persist"):
+            globals.currentScreenDetails.addScreenCommand(addOption["optionText"])
 
 def addToInventory(itemsList):
     print("ADDED TO INVENTORY:")
@@ -55,7 +60,11 @@ def loadCheckpoint(checkpointId):
 
             # check for new options unlocked
             if("addOptions" in checkpointData):
-                globals.currentChapterData[checkpointData["addOptionsTo"]]["options"] = addOptions(checkpointData["addOptions"], globals.currentChapterData[checkpointData["addOptionsTo"]]["options"])
+                globals.currentChapterData[checkpointData["addOptionsTo"]]["options"] = addOptionsToCheckpoint(checkpointData["addOptions"], globals.currentChapterData[checkpointData["addOptionsTo"]]["options"])
+
+                # add to screen details too (if any "persist" type options)
+                addOptionsToScreen(checkpointData["addOptions"])
+
 
             # add to inventory (if any)
             if("addToInventory" in checkpointData):
@@ -68,8 +77,8 @@ def loadCheckpoint(checkpointId):
             
             # show action options
             if("options" in checkpointData):
-                printOptions(checkpointData["options"])
                 globals.currentChapterCheckpointOptions = [option["optionText"] for option in checkpointData["options"]]
+                printOptions(globals.currentChapterCheckpointOptions)
 
     except:
         traceback.print_exc()
@@ -100,7 +109,7 @@ def processInput():
             else:
                 print("")
                 checkpointData = globals.currentChapterData[globals.currentChapterCheckpointId]
-                optionIndex = globals.currentChapterCheckpointOptions.index(action)
+                optionIndex = globals.currentScreenDetails.screenTempCommands.index(action)
                 actionFound = checkpointData["options"][optionIndex]
                 actionResponse = actionFound["optionResponse"]
                 actionType = actionFound["optionType"]
@@ -113,7 +122,7 @@ def processInput():
 
                 if(actionType == "once"):
                     checkpointData["options"].pop(optionIndex)
-                    globals.currentChapterCheckpointOptions = [option["optionText"] for option in checkpointData["options"]]
+                    globals.currentScreenDetails.screenTempCommands = [option["optionText"] for option in checkpointData["options"]]
 
     return inputResponse
 
@@ -125,11 +134,12 @@ def processGenericInput(action):
             print(f"\nYou do that.\n")
         elif(action == globals.commandList):
             genericResponse = action
-            printOptions(globals.currentChapterData[globals.currentChapterCheckpointId]["options"])
-        # elif(action == globals.commandOpenInventory):
-        #     if(globals.currentScreenDetails == globals.Screen.GAME):
-        #         genericResponse = action
-        #         globals.isInventoryOpen = True
-        #         print("the inventory is not here yet. they said one-day delivery, absolute noobs. you'll see it when we see it. END OF DEMO")
+            print()
+            if(len(globals.currentScreenDetails.screenTempCommands)):
+                print("--------")
+                printOptions(globals.currentScreenDetails.screenTempCommands)
+            print("--------")
+            printOptions(globals.currentScreenDetails.screenCommands)
+            print("--------")
 
     return genericResponse

@@ -21,15 +21,26 @@ class ScreenDetails:
         if nxtScrDet is not None:
             self.nextScreenDetails = nxtScrDet
 
-    def updateTempCommands(self, newCommands):
-        self.screenTempCommands = newCommands
+    def updateTempCommands(self, newTempCommands):
+        self.screenTempCommands = newTempCommands
+
+    def addScreenCommand(self, newCommand):
+        if(newCommand not in self.screenCommands):
+            self.screenCommands += [newCommand]
+
+    def removeScreenCommand(self, oldCommand):
+        if(oldCommand in self.screenCommands):
+            self.screenCommands.pop(self.screenCommands.index(oldCommand))
+
+    def getAllCommands(self):
+        return self.screenCommands + self.screenTempCommands
 
 currentScreenDetails = ScreenDetails(Screen.GAME, [], None)
 exitScreenDetails = ScreenDetails(Screen.EXIT, [], None)
 
 currentChapter = "-1"
 currentChapterData = {}
-currentChapterCheckpointId = "-1.0"
+currentChapterCheckpointId = "1.1"
 currentChapterCheckpointOptions = []
 isInventoryOpen = False
 
