@@ -1,21 +1,22 @@
 from glob import glob
 import globals
+import constants
 import utils
 import screens
 
 def mainLoop():
     globals.currentScreenDetails = screens.showMainMenu()
-    while(globals.currentScreenDetails.screenType != globals.Screen.EXIT):
-        # if(globals.currentScreenDetails.screenType == globals.Screen.MAIN_MENU):
+    while(globals.currentScreenDetails.screenType != constants.Screen.EXIT):
+        # if(globals.currentScreenDetails.screenType == constants.Screen.MAIN_MENU):
         #     currentScreenDetails = screens.showMainMenu()
-        # elif(globals.currentScreenDetails.screenType == globals.Screen.SELECT_PROFILE):
+        # elif(globals.currentScreenDetails.screenType == constants.Screen.SELECT_PROFILE):
         #     currentScreenDetails = screens.showMainMenu()
-        # if(globals.currentScreenDetails.screenType == globals.Screen.GAME):
+        # if(globals.currentScreenDetails.screenType == constants.Screen.GAME):
         #     currentScreenDetails = screens.showGameScreen()
 
         # globals.currentScreenDetails = currentScreenDetails
         inputResponse = ""
-        while(inputResponse != globals.commandExitGame):
+        while(inputResponse != constants.commandExitGame):
             currentScreenDetails = globals.currentScreenDetails
 
             if(currentScreenDetails.inputProcessor):
@@ -23,11 +24,11 @@ def mainLoop():
                     currentScreenDetails.inputProcessor(inputResponse)
             inputResponse = utils.processInput()
             
-            if(inputResponse == globals.commandList):
+            if(inputResponse == constants.commandList):
                 inputResponse = ""
 
-        if(inputResponse == globals.commandExitGame):
-            globals.currentScreenDetails = globals.exitScreenDetails
+        if(inputResponse == constants.commandExitGame):
+            globals.currentScreenDetails = constants.exitScreenDetails
 
 # screens.showGameScreen()
 # screens.showMainMenu()

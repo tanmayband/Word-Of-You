@@ -2,8 +2,10 @@ import traceback
 from typing import List
 import json
 import re
+import os
 
 import globals
+import constants
 
 def printDescription(descTexts):
     for descText in descTexts:
@@ -93,7 +95,7 @@ def loadFile(filename):
 
 def validateInput(inputText):
     pattern = r"^[a-zA-Z0-9\s]+$"     # only alphanumeric with spaces allowed
-    return re.match(pattern, inputText) != None
+    return True#re.match(pattern, inputText) != None
 
 def sanitizeInput(inputText):
     inputText = inputText.replace(" ", "_")
@@ -117,11 +119,11 @@ def processInput():
 
 def processGenericInput(action):
     genericResponse = None
-    if(action in globals.commandsGeneric):
-        if(action == globals.commandExitGame):
+    if(action in constants.commandsGeneric):
+        if(action == constants.commandExitGame):
             genericResponse = action
             print(f"\nYou do that.\n")
-        elif(action == globals.commandList):
+        elif(action == constants.commandList):
             genericResponse = action
             print()
             if(len(globals.currentScreenDetails.screenTempCommands)):
@@ -132,3 +134,8 @@ def processGenericInput(action):
             print("--------")
 
     return genericResponse
+
+def createNewProfile(profileName):
+    profileDirName = f"Profiles/profile_{profileName}"
+    if not os.path.exists(profileDirName):
+        os.makedirs(profileDirName)

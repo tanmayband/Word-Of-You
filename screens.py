@@ -1,14 +1,15 @@
 from glob import glob
-from globals import Screen, ScreenDetails
+from constants import Screen, ScreenDetails
+import constants
 import globals
 import utils
 
 def showMainMenu():
     def mainMenuInput(inputResponse):
-        if(inputResponse == globals.commandNewGame):
+        if(inputResponse == constants.commandNewGame):
             globals.currentScreenDetails = showNewGameScreen(screenDetails)
 
-    screenDetails = ScreenDetails(Screen.MAIN_MENU, [globals.commandLoadGame, globals.commandNewGame, globals.commandExitGame, globals.commandList], mainMenuInput)
+    screenDetails = ScreenDetails(Screen.MAIN_MENU, [constants.commandLoadGame, constants.commandNewGame, constants.commandExitGame, constants.commandList], mainMenuInput)
     globals.currentScreenDetails = screenDetails
     print(f"> Type an option")
     for option in screenDetails.screenCommands:
@@ -22,11 +23,11 @@ def showNewGameScreen(prevScrDet):
             inputResponse = utils.sanitizeInput(inputResponse)
             print(f"# Creating profile \"{inputResponse}\"...")
             globals.currentProfileName = inputResponse
-            # make folder and relevant files
+            utils.createNewProfile(globals.currentProfileName)
             # start game
             showGameScreen()
 
-    screenDetails = ScreenDetails(Screen.NEW_PROFILE, [globals.commandMenuBack, globals.commandExitGame, globals.commandList], MakeProfileInput, prevScrDet)
+    screenDetails = ScreenDetails(Screen.NEW_PROFILE, [constants.commandMenuBack, constants.commandExitGame, constants.commandList], MakeProfileInput, prevScrDet)
     globals.currentScreenDetails = screenDetails
     print(f"\n# Creating a new profile...")
     print(f"> Type a name:")
@@ -55,33 +56,36 @@ def showGameScreen(prevScrDet=None):
                 if(actionType == "once"):
                     checkpointData["options"].pop(optionIndex)
                     globals.currentScreenDetails.screenTempCommands = [option["optionText"] for option in checkpointData["options"]]
+                
         else:
-            if(inputResponse == globals.commandOpenInventory):
+            if(inputResponse == constants.commandOpenInventory):
                 globals.isInventoryOpen = True
                 print("the inventory is not here yet. they said one-day delivery, absolute duffers. you'll see it when we see it. END OF DEMO")
-        
+
+        gameScreenUpdate(inputResponse)
+
+    def gameScreenUpdate(inputResponse):
         if(inputResponse[0].isnumeric()):
             utils.loadCheckpoint(inputResponse)
             screenDetails.updateTempCommands(globals.currentChapterCheckpointOptions)
 
-
     globals.currentScreenDetails = Screen.GAME
     print(f"\n------------------------------\n--- YOUR ADVENTURE AWAITS! ---\n------------------------------")
-    # print(f"[\"{globals.commandExitGame}\" to exit game]")
-    # print(f"[\"{globals.commandList}\" to list actions]")
+    # print(f"[\"{constants.commandExitGame}\" to exit game]")
+    # print(f"[\"{constants.commandList}\" to list actions]")
     print()
 
-    screenDetails = ScreenDetails(Screen.GAME, [globals.commandExitGame, globals.commandList], gameScreenInput, prevScrDet)
+    screenDetails = ScreenDetails(Screen.GAME, [constants.commandExitGame, constants.commandList], gameScreenInput, prevScrDet)
     globals.currentScreenDetails = screenDetails
     print(f"# General Commands:")
     for option in screenDetails.screenCommands:
         print(f"- {option}")
 
-    gameScreenInput(globals.currentChapterCheckpointId)
+    gameScreenUpdate(globals.currentChapterCheckpointId)
     return screenDetails
 
     # inputResponse = "1.1"
-    # while(inputResponse != globals.commandExitGame):
-    #     if(inputResponse not in globals.commandsGeneric):
+    # while(inputResponse != constants.commandExitGame):
+    #     if(inputResponse not in constants.commandsGeneric):
     #         utils.loadCheckpoint(inputResponse)
     #     inputResponse = utils.processInput()
