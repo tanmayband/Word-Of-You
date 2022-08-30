@@ -93,37 +93,14 @@ def loadFile(filename):
 def processInput():
     moveAhead = False
     inputResponse = ""
-    while(not moveAhead):
-        action = input("> ").strip().lower()
-        genericResponse = processGenericInput(action)
-        if(genericResponse):
-            moveAhead = True
-            inputResponse = genericResponse
-        else:
-            if(action in globals.currentScreenDetails.screenCommands):
-                inputResponse = action
-                moveAhead = True
-
-            elif(action not in globals.currentScreenDetails.screenTempCommands):
-                print(f"You fail to do that. Try again.")
-            else:
-                print("")
-                checkpointData = globals.currentChapterData[globals.currentChapterCheckpointId]
-                optionIndex = globals.currentScreenDetails.screenTempCommands.index(action)
-                actionFound = checkpointData["options"][optionIndex]
-                actionResponse = actionFound["optionResponse"]
-                actionType = actionFound["optionType"]
-                
-                if(type(actionResponse) == list):
-                    printDescription(actionResponse)
-                else:
-                    inputResponse = actionResponse
-                    moveAhead = True
-
-                if(actionType == "once"):
-                    checkpointData["options"].pop(optionIndex)
-                    globals.currentScreenDetails.screenTempCommands = [option["optionText"] for option in checkpointData["options"]]
-
+    # while(not moveAhead):
+    action = input("> ").strip().lower()
+    inputResponse = action
+    genericResponse = processGenericInput(action)
+    if(genericResponse):
+        # moveAhead = True
+        inputResponse = genericResponse
+            
     return inputResponse
 
 def processGenericInput(action):

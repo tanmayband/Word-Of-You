@@ -16,16 +16,52 @@ def showMainMenu():
 
     return screenDetails
 
+def showNewGameScreen(prevScrDet):
+    def MakeProfileInput(inputResponse):
+        pass
+        if(inputResponse not in globals.currentScreenDetails.getAllCommands()):
+            print(f"# Creating profile ${inputResponse}...")
+            globals.currentProfileName = inputResponse
+
+    screenDetails = ScreenDetails(Screen.NEW_PROFILE, [globals.commandNewGame, globals.commandMenuBack, globals.commandExitGame, globals.commandList], MakeProfileInput, prevScrDet)
+    globals.currentScreenDetails = screenDetails
+    print(f"\n# Creating a new profile...")
+    print(f"> Type a name:")
+    print("(Command names not allowed)")
+
+    return screenDetails
+
 def showGameScreen(prevScrDet):
     def gameScreenInput(inputResponse):
         if(inputResponse and len(inputResponse) > 0):
+            if(inputResponse not in globals.currentScreenDetails.screenCommands):
+                if(inputResponse not in globals.currentScreenDetails.screenTempCommands):
+                    print(f"You fail to do that. Try again.")
+                else:
+                    print("")
+                    checkpointData = globals.currentChapterData[globals.currentChapterCheckpointId]
+                    optionIndex = globals.currentScreenDetails.screenTempCommands.index(inputResponse)
+                    actionFound = checkpointData["options"][optionIndex]
+                    actionResponse = actionFound["optionResponse"]
+                    actionType = actionFound["optionType"]
+                    
+                    if(type(actionResponse) == list):
+                        utils.printDescription(actionResponse)
+                    else:
+                        inputResponse = actionResponse
+
+                    if(actionType == "once"):
+                        checkpointData["options"].pop(optionIndex)
+                        globals.currentScreenDetails.screenTempCommands = [option["optionText"] for option in checkpointData["options"]]
+            else:
+                if(inputResponse == globals.commandOpenInventory):
+                    globals.isInventoryOpen = True
+                    print("the inventory is not here yet. they said one-day delivery, absolute duffers. you'll see it when we see it. END OF DEMO")
+            
             if(inputResponse[0].isnumeric()):
                 utils.loadCheckpoint(inputResponse)
                 screenDetails.updateTempCommands(globals.currentChapterCheckpointOptions)
 
-            elif(inputResponse == globals.commandOpenInventory):
-                globals.isInventoryOpen = True
-                print("the inventory is not here yet. they said one-day delivery, absolute noobs. you'll see it when we see it. END OF DEMO")
 
     globals.currentScreenDetails = Screen.GAME
     print(f"\n------------------------------\n--- YOUR ADVENTURE AWAITS! ---\n------------------------------")

@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Screen(Enum):
-    NONE, MAIN_MENU, SELECT_PROFILE, PAUSE_MENU, GAME, INVENTORY, EXIT = range(7)
+    NONE, MAIN_MENU, SELECT_PROFILE, NEW_PROFILE, PAUSE_MENU, GAME, INVENTORY, EXIT = range(8)
 
 class ScreenDetails:
     screenType = Screen.NONE
@@ -38,6 +38,7 @@ class ScreenDetails:
 currentScreenDetails = ScreenDetails(Screen.GAME, [], None)
 exitScreenDetails = ScreenDetails(Screen.EXIT, [], None)
 
+currentProfileName = ""
 currentChapter = "-1"
 currentChapterData = {}
 currentChapterCheckpointId = "1.1"
@@ -50,6 +51,7 @@ commandOpenInventory = "open inventory"
 commandCloseInventory = "close inventory"
 commandNewGame = "start game"
 commandLoadGame = "load game"
+commandMenuBack = "back"
 
 commandsGeneric = [commandExitGame, commandList]
 #, commandOpenInventory, commandCloseInventory, commandNewGame, commandLoadGame]
