@@ -1,8 +1,14 @@
 currentChapter = "-1"
 currentChapterData = {}
-exitGameCommand = "exit game"
-listCommand = "list"
-openInventoryCommand = "open inventory"
-closeInventoryCommand = "close inventory"
-genericCommands = [exitGameCommand, listCommand, openInventoryCommand, closeInventoryCommand]
+currentChapterCheckpointId = "-1.0"
+currentChapterCheckpointOptions = []
 isInventoryOpen = False
+
+commandExitGame = "exit game"
+commandList = "list"
+commandOpenInventory = "open inventory"
+commandCloseInventory = "close inventory"
+commandNewGame = "start game"
+commandLoadGame = "load game"
+
+commandsGeneric = [commandExitGame, commandList, commandOpenInventory, commandCloseInventory, commandNewGame, commandLoadGame]
