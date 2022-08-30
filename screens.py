@@ -5,8 +5,8 @@ import utils
 
 def showMainMenu():
     def mainMenuInput(inputResponse):
-        # utils.loadCheckpoint(inputResponse)
-        print(inputResponse)
+        if(inputResponse == globals.commandNewGame):
+            globals.currentScreenDetails = showGameScreen(screenDetails)
 
     screenDetails = ScreenDetails(Screen.MAIN_MENU, [globals.commandLoadGame, globals.commandNewGame, globals.commandExitGame, globals.commandList], mainMenuInput)
     globals.currentScreenDetails = screenDetails
@@ -16,10 +16,12 @@ def showMainMenu():
 
     return screenDetails
 
-def showGameScreen():
+def showGameScreen(prevScrDet):
     def gameScreenInput(inputResponse):
+        print(f"game input: {inputResponse}")
         if(inputResponse and len(inputResponse) > 0):
             utils.loadCheckpoint(inputResponse)
+            screenDetails.updateTempCommands(globals.currentChapterCheckpointOptions)
 
     globals.currentScreenDetails = Screen.GAME
     print(f"\n------------------------------\n--- YOUR ADVENTURE AWAITS! ---\n------------------------------")
@@ -27,7 +29,7 @@ def showGameScreen():
     # print(f"[\"{globals.commandList}\" to list actions]")
     print()
 
-    screenDetails = ScreenDetails(Screen.GAME, [globals.commandExitGame, globals.commandList], gameScreenInput)
+    screenDetails = ScreenDetails(Screen.GAME, [globals.commandExitGame, globals.commandList], gameScreenInput, prevScrDet)
     globals.currentScreenDetails = screenDetails
     print(f"# General Commands:")
     for option in screenDetails.screenCommands:

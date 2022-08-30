@@ -91,7 +91,11 @@ def processInput():
             moveAhead = True
             inputResponse = genericResponse
         else:
-            if(action not in globals.currentChapterCheckpointOptions):
+            if(action in globals.currentScreenDetails.screenCommands):
+                inputResponse = action
+                moveAhead = True
+
+            elif(action not in globals.currentScreenDetails.screenTempCommands):
                 print(f"You fail to do that. Try again.")
             else:
                 print("")
@@ -122,10 +126,10 @@ def processGenericInput(action):
         elif(action == globals.commandList):
             genericResponse = action
             printOptions(globals.currentChapterData[globals.currentChapterCheckpointId]["options"])
-        elif(action == globals.commandOpenInventory):
-            if(globals.currentScreenDetails == globals.Screen.GAME):
-                genericResponse = action
-                globals.isInventoryOpen = True
-                print("the inventory is not here yet. they said one-day delivery, absolute noobs. you'll see it when we see it. END OF DEMO")
+        # elif(action == globals.commandOpenInventory):
+        #     if(globals.currentScreenDetails == globals.Screen.GAME):
+        #         genericResponse = action
+        #         globals.isInventoryOpen = True
+        #         print("the inventory is not here yet. they said one-day delivery, absolute noobs. you'll see it when we see it. END OF DEMO")
 
     return genericResponse
