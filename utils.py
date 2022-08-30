@@ -95,7 +95,7 @@ def loadFile(filename):
 
 def validateInput(inputText):
     pattern = r"^[a-zA-Z0-9\s]+$"     # only alphanumeric with spaces allowed
-    return True#re.match(pattern, inputText) != None
+    return re.match(pattern, inputText) != None
 
 def sanitizeInput(inputText):
     inputText = inputText.replace(" ", "_")

@@ -52,6 +52,7 @@ def showGameScreen(prevScrDet=None):
                     utils.printDescription(actionResponse)
                 else:
                     inputResponse = actionResponse
+                    gameScreenUpdate(inputResponse)
 
                 if(actionType == "once"):
                     checkpointData["options"].pop(optionIndex)
@@ -62,7 +63,8 @@ def showGameScreen(prevScrDet=None):
                 globals.isInventoryOpen = True
                 print("the inventory is not here yet. they said one-day delivery, absolute duffers. you'll see it when we see it. END OF DEMO")
 
-        gameScreenUpdate(inputResponse)
+        # CHEAT: comment in to enable jumpoing to checkpoints by inputting its id
+        # gameScreenUpdate(inputResponse)
 
     def gameScreenUpdate(inputResponse):
         if(inputResponse[0].isnumeric()):
@@ -71,8 +73,6 @@ def showGameScreen(prevScrDet=None):
 
     globals.currentScreenDetails = Screen.GAME
     print(f"\n------------------------------\n--- YOUR ADVENTURE AWAITS! ---\n------------------------------")
-    # print(f"[\"{constants.commandExitGame}\" to exit game]")
-    # print(f"[\"{constants.commandList}\" to list actions]")
     print()
 
     screenDetails = ScreenDetails(Screen.GAME, [constants.commandExitGame, constants.commandList], gameScreenInput, prevScrDet)
@@ -83,9 +83,3 @@ def showGameScreen(prevScrDet=None):
 
     gameScreenUpdate(globals.currentChapterCheckpointId)
     return screenDetails
-
-    # inputResponse = "1.1"
-    # while(inputResponse != constants.commandExitGame):
-    #     if(inputResponse not in constants.commandsGeneric):
-    #         utils.loadCheckpoint(inputResponse)
-    #     inputResponse = utils.processInput()
