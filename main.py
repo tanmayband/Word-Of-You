@@ -6,7 +6,6 @@ import screens
 def mainLoop():
     globals.currentScreenDetails = screens.showMainMenu()
     while(globals.currentScreenDetails.screenType != globals.Screen.EXIT):
-        currentScreenDetails = globals.currentScreenDetails
         # if(globals.currentScreenDetails.screenType == globals.Screen.MAIN_MENU):
         #     currentScreenDetails = screens.showMainMenu()
         # elif(globals.currentScreenDetails.screenType == globals.Screen.SELECT_PROFILE):
@@ -17,9 +16,9 @@ def mainLoop():
         # globals.currentScreenDetails = currentScreenDetails
         inputResponse = ""
         while(inputResponse != globals.commandExitGame):
-            if(inputResponse in currentScreenDetails.screenCommands or inputResponse in currentScreenDetails.screenTempCommands):
-                if(currentScreenDetails.inputProcessor):
-                    currentScreenDetails.inputProcessor(inputResponse)
+            currentScreenDetails = globals.currentScreenDetails
+            if(currentScreenDetails.inputProcessor):
+                currentScreenDetails.inputProcessor(inputResponse)
             inputResponse = utils.processInput()
 
         if(inputResponse == globals.commandExitGame):
