@@ -1,6 +1,7 @@
 import traceback
 from typing import List
 import json
+import re
 
 import globals
 
@@ -90,16 +91,27 @@ def loadFile(filename):
     file.close()
     return jsonData
 
+def validateInput(inputText):
+    pattern = r"^[a-zA-Z0-9\s]+$"     # only alphanumeric with spaces allowed
+    return re.match(pattern, inputText) != None
+
+def sanitizeInput(inputText):
+    inputText = inputText.replace(" ", "_")
+    return inputText
+
 def processInput():
     moveAhead = False
     inputResponse = ""
     # while(not moveAhead):
     action = input("> ").strip().lower()
-    inputResponse = action
-    genericResponse = processGenericInput(action)
-    if(genericResponse):
-        # moveAhead = True
-        inputResponse = genericResponse
+    if(validateInput(action)):
+        inputResponse = action
+        genericResponse = processGenericInput(action)
+        if(genericResponse):
+            # moveAhead = True
+            inputResponse = genericResponse
+    else:
+        print("Only alphanumeric input please")
             
     return inputResponse
 

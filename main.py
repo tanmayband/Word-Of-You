@@ -19,7 +19,8 @@ def mainLoop():
             currentScreenDetails = globals.currentScreenDetails
 
             if(currentScreenDetails.inputProcessor):
-                currentScreenDetails.inputProcessor(inputResponse)
+                if(inputResponse and len(inputResponse) > 0):
+                    currentScreenDetails.inputProcessor(inputResponse)
             inputResponse = utils.processInput()
             
             if(inputResponse == globals.commandList):
