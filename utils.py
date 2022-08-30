@@ -3,6 +3,7 @@ from typing import List
 import json
 import re
 import os
+import shutil
 
 import globals
 import constants
@@ -102,15 +103,12 @@ def sanitizeInput(inputText):
     return inputText
 
 def processInput():
-    moveAhead = False
     inputResponse = ""
-    # while(not moveAhead):
     action = input("> ").strip().lower()
     if(validateInput(action)):
         inputResponse = action
         genericResponse = processGenericInput(action)
         if(genericResponse):
-            # moveAhead = True
             inputResponse = genericResponse
     else:
         print("Only alphanumeric input please")
@@ -136,6 +134,10 @@ def processGenericInput(action):
     return genericResponse
 
 def createNewProfile(profileName):
-    profileDirName = f"Profiles/profile_{profileName}"
+    profilesRoot = "Profiles"
+    profileDirName = os.path.join(profilesRoot, f"profile_{profileName}")
     if not os.path.exists(profileDirName):
         os.makedirs(profileDirName)
+        profileGlobalsName = os.path.join(profileDirName,"globals.json")
+        f = open(profileGlobalsName,'x')
+        f.close()

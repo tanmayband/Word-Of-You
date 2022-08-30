@@ -43,6 +43,7 @@ commandOpenInventory = "open inventory"
 commandCloseInventory = "close inventory"
 commandNewGame = "start game"
 commandLoadGame = "load game"
+commandSaveGame = "save game"
 commandMenuBack = "back"
 
 commandsGeneric = [commandExitGame, commandList]

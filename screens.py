@@ -62,6 +62,8 @@ def showGameScreen(prevScrDet=None):
             if(inputResponse == constants.commandOpenInventory):
                 globals.isInventoryOpen = True
                 print("the inventory is not here yet. they said one-day delivery, absolute duffers. you'll see it when we see it. END OF DEMO")
+            elif(inputResponse == constants.commandSaveGame):
+                print(f"> Saving to {globals.currentProfileName}...")
 
         # CHEAT: comment in to enable jumpoing to checkpoints by inputting its id
         # gameScreenUpdate(inputResponse)
@@ -75,7 +77,7 @@ def showGameScreen(prevScrDet=None):
     print(f"\n------------------------------\n--- YOUR ADVENTURE AWAITS! ---\n------------------------------")
     print()
 
-    screenDetails = ScreenDetails(Screen.GAME, [constants.commandExitGame, constants.commandList], gameScreenInput, prevScrDet)
+    screenDetails = ScreenDetails(Screen.GAME, [constants.commandSaveGame, constants.commandExitGame, constants.commandList], gameScreenInput, prevScrDet)
     globals.currentScreenDetails = screenDetails
     print(f"# General Commands:")
     for option in screenDetails.screenCommands:
