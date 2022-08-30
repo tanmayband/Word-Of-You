@@ -1,23 +1,31 @@
 from glob import glob
 import globals
+from constants import Screen, ScreenDetails
 import constants
 import utils
 import screens
 
 def mainLoop():
-    globals.currentScreenDetails = screens.showMainMenu()
-    while(globals.currentScreenDetails.screenType != constants.Screen.EXIT):
-        # if(globals.currentScreenDetails.screenType == constants.Screen.MAIN_MENU):
+    globals.currentGlobalConfig = globals.GlobalConfig(
+        ScreenDetails(Screen.MAIN_MENU, [], None),
+        "=1",
+        {},
+        "1.1",
+        []
+    )
+    globals.currentGlobalConfig.currentScreenDetails = screens.showMainMenu()
+    while(globals.currentGlobalConfig.currentScreenDetails.screenType != constants.Screen.EXIT):
+        # if(globals.currentGlobalConfig.currentScreenDetails.screenType == constants.Screen.MAIN_MENU):
         #     currentScreenDetails = screens.showMainMenu()
-        # elif(globals.currentScreenDetails.screenType == constants.Screen.SELECT_PROFILE):
+        # elif(globals.currentGlobalConfig.currentScreenDetails.screenType == constants.Screen.SELECT_PROFILE):
         #     currentScreenDetails = screens.showMainMenu()
-        # if(globals.currentScreenDetails.screenType == constants.Screen.GAME):
+        # if(globals.currentGlobalConfig.currentScreenDetails.screenType == constants.Screen.GAME):
         #     currentScreenDetails = screens.showGameScreen()
 
-        # globals.currentScreenDetails = currentScreenDetails
+        # globals.currentGlobalConfig.currentScreenDetails = currentScreenDetails
         inputResponse = ""
         while(inputResponse != constants.commandExitGame):
-            currentScreenDetails = globals.currentScreenDetails
+            currentScreenDetails = globals.currentGlobalConfig.currentScreenDetails
 
             if(currentScreenDetails.inputProcessor):
                 if(inputResponse and len(inputResponse) > 0):
@@ -28,7 +36,7 @@ def mainLoop():
                 inputResponse = ""
 
         if(inputResponse == constants.commandExitGame):
-            globals.currentScreenDetails = constants.exitScreenDetails
+            globals.currentGlobalConfig.currentScreenDetails = constants.exitScreenDetails
 
 # screens.showGameScreen()
 # screens.showMainMenu()

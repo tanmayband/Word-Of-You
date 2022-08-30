@@ -30,7 +30,7 @@ def addOptionsToCheckpoint(newOptionsList, oldOptionsList):
 def addOptionsToScreen(newOptionsList):
     for addOption in newOptionsList:
         if(addOption["optionType"] == "persist"):
-            globals.currentScreenDetails.addScreenCommand(addOption["optionText"])
+            globals.currentGlobalConfig.currentScreenDetails.addScreenCommand(addOption["optionText"])
 
 def addToInventory(itemsList):
     print("ADDED TO INVENTORY:")
@@ -40,18 +40,18 @@ def addToInventory(itemsList):
 
 def loadChapter(chapterNum):
     chapterData = loadFile(f"Data/chapter{chapterNum}.json")
-    globals.currentChapterData = chapterData
-    globals.currentChapter = chapterNum
+    globals.currentGlobalConfig.currentChapterData = chapterData
+    globals.currentGlobalConfig.currentChapter = chapterNum
 
 def loadCheckpoint(checkpointId):
     try:
         nextCheckpoint = ""
-        if(checkpointId[0] != globals.currentChapter):
+        if(checkpointId[0] != globals.currentGlobalConfig.currentChapter):
             # different chapter
             loadChapter(checkpointId[0])
         
-        globals.currentChapterCheckpointId = checkpointId
-        checkpointData = globals.currentChapterData[checkpointId]
+        globals.currentGlobalConfig.currentChapterCheckpointId = checkpointId
+        checkpointData = globals.currentGlobalConfig.currentChapterData[checkpointId]
         printDescription(checkpointData["description"])
 
         if("nextChapterCheckpoint" in checkpointData):
@@ -64,7 +64,7 @@ def loadCheckpoint(checkpointId):
 
             # check for new options unlocked
             if("addOptions" in checkpointData):
-                globals.currentChapterData[checkpointData["addOptionsTo"]]["options"] = addOptionsToCheckpoint(checkpointData["addOptions"], globals.currentChapterData[checkpointData["addOptionsTo"]]["options"])
+                globals.currentGlobalConfig.currentChapterData[checkpointData["addOptionsTo"]]["options"] = addOptionsToCheckpoint(checkpointData["addOptions"], globals.currentGlobalConfig.currentChapterData[checkpointData["addOptionsTo"]]["options"])
 
                 # add to screen details too (if any "persist" type options)
                 addOptionsToScreen(checkpointData["addOptions"])
@@ -76,13 +76,13 @@ def loadCheckpoint(checkpointId):
 
             # moving back to an earlier checkpoint (if any)
             if("goToCheckpoint" in checkpointData):
-                globals.currentChapterCheckpointId = checkpointData["goToCheckpoint"]
-                checkpointData = globals.currentChapterData[globals.currentChapterCheckpointId]
+                globals.currentGlobalConfig.currentChapterCheckpointId = checkpointData["goToCheckpoint"]
+                checkpointData = globals.currentGlobalConfig.currentChapterData[globals.currentGlobalConfig.currentChapterCheckpointId]
             
             # show action options
             if("options" in checkpointData):
-                globals.currentChapterCheckpointOptions = [option["optionText"] for option in checkpointData["options"]]
-                printOptions(globals.currentChapterCheckpointOptions)
+                globals.currentGlobalConfig.currentChapterCheckpointOptions = [option["optionText"] for option in checkpointData["options"]]
+                printOptions(globals.currentGlobalConfig.currentChapterCheckpointOptions)
 
     except:
         traceback.print_exc()
@@ -124,11 +124,11 @@ def processGenericInput(action):
         elif(action == constants.commandList):
             genericResponse = action
             print()
-            if(len(globals.currentScreenDetails.screenTempCommands)):
+            if(len(globals.currentGlobalConfig.currentScreenDetails.screenTempCommands)):
                 print("--------")
-                printOptions(globals.currentScreenDetails.screenTempCommands)
+                printOptions(globals.currentGlobalConfig.currentScreenDetails.screenTempCommands)
             print("--------")
-            printOptions(globals.currentScreenDetails.screenCommands)
+            printOptions(globals.currentGlobalConfig.currentScreenDetails.screenCommands)
             print("--------")
 
     return genericResponse
@@ -141,3 +141,6 @@ def createNewProfile(profileName):
         profileGlobalsName = os.path.join(profileDirName,"globals.json")
         f = open(profileGlobalsName,'x')
         f.close()
+
+# def save
+
