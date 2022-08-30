@@ -70,16 +70,16 @@ def loadCheckpoint(checkpointId):
             if("options" in checkpointData):
                 printOptions(checkpointData["options"])
                 globals.currentChapterCheckpointOptions = [option["optionText"] for option in checkpointData["options"]]
-                    
+
     except:
         traceback.print_exc()
+        traceback.print_stack()
 
 def loadFile(filename):
     file = open(filename)
     jsonData = json.load(file)
     file.close()
     return jsonData
-
 
 def processInput():
     moveAhead = False
@@ -116,13 +116,16 @@ def processInput():
 def processGenericInput(action):
     genericResponse = None
     if(action in globals.commandsGeneric):
-        genericResponse = action
         if(action == globals.commandExitGame):
+            genericResponse = action
             print(f"\nYou do that.\n")
         elif(action == globals.commandList):
+            genericResponse = action
             printOptions(globals.currentChapterData[globals.currentChapterCheckpointId]["options"])
         elif(action == globals.commandOpenInventory):
-            globals.isInventoryOpen = True
-            print("the inventory is not here yet. they said one-day delivery, absolute noobs. you'll see it when we see it. END OF DEMO")
+            if(globals.currentScreenDetails == globals.Screen.GAME):
+                genericResponse = action
+                globals.isInventoryOpen = True
+                print("the inventory is not here yet. they said one-day delivery, absolute noobs. you'll see it when we see it. END OF DEMO")
 
     return genericResponse

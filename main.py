@@ -1,17 +1,25 @@
 import globals
 import utils
-import menus
+import screens
 
-def start():
-    print(f"\n------------------------------\n--- YOUR ADVENTURE AWAITS! ---\n------------------------------")
-    print(f"[\"{globals.commandExitGame}\" to exit game]")
-    print(f"[\"{globals.commandList}\" to list actions]")
-    print()
-    inputResponse = "1.1"
-    while(inputResponse != globals.commandExitGame):
-        if(inputResponse not in globals.commandsGeneric):
-            utils.loadCheckpoint(inputResponse)
-        inputResponse = utils.processInput()
-    
-start()
-# menus.showStartMenu()
+def mainLoop():
+    currentScreenDetails = globals.currentScreenDetails
+    while(globals.currentScreenDetails.screenType != globals.Screen.EXIT):
+        if(globals.currentScreenDetails.screenType == globals.Screen.MAIN_MENU):
+            currentScreenDetails = screens.showMainMenu()
+        elif(globals.currentScreenDetails.screenType == globals.Screen.SELECT_PROFILE):
+            currentScreenDetails = screens.showMainMenu()
+        if(globals.currentScreenDetails.screenType == globals.Screen.GAME):
+            currentScreenDetails = screens.showGameScreen()
+
+        globals.currentScreenDetails = currentScreenDetails
+        inputResponse = ""
+        while(inputResponse != globals.commandExitGame):
+            if(inputResponse not in globals.commandsGeneric):
+                if(currentScreenDetails.inputProcessor):
+                    currentScreenDetails.inputProcessor(inputResponse)
+            inputResponse = utils.processInput()
+
+# screens.showGameScreen()
+# screens.showMainMenu()
+mainLoop()
