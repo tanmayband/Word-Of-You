@@ -1,4 +1,5 @@
 from enum import Enum
+import json
 
 class Screen(Enum):
     NONE, MAIN_MENU, SELECT_PROFILE, NEW_PROFILE, PAUSE_MENU, GAME, INVENTORY, EXIT = range(8)
@@ -45,6 +46,7 @@ commandNewGame = "start game"
 commandLoadGame = "load game"
 commandSaveGame = "save game"
 commandMenuBack = "back"
+commandTest = "test"
 
-commandsGeneric = [commandExitGame, commandList]
+commandsGeneric = [commandExitGame, commandList, commandTest]
 #, commandOpenInventory, commandCloseInventory, commandNewGame, commandLoadGame]

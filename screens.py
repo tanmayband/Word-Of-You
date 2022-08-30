@@ -8,6 +8,8 @@ def showMainMenu():
     def mainMenuInput(inputResponse):
         if(inputResponse == constants.commandNewGame):
             globals.currentGlobalConfig.currentScreenDetails = showNewGameScreen(screenDetails)
+        elif(inputResponse == constants.commandLoadGame):
+            globals.currentGlobalConfig.currentScreenDetails = showLoadGameScreen(screenDetails)
 
     screenDetails = ScreenDetails(Screen.MAIN_MENU, [constants.commandLoadGame, constants.commandNewGame, constants.commandExitGame, constants.commandList], mainMenuInput)
     globals.currentGlobalConfig.currentScreenDetails = screenDetails
@@ -22,8 +24,7 @@ def showNewGameScreen(prevScrDet):
         if(inputResponse not in globals.currentGlobalConfig.currentScreenDetails.getAllCommands()):
             inputResponse = utils.sanitizeInput(inputResponse)
             print(f"# Creating profile \"{inputResponse}\"...")
-            globals.currentGlobalConfig.currentProfileName = inputResponse
-            utils.createNewProfile(globals.currentGlobalConfig.currentProfileName)
+            utils.createNewProfile(inputResponse)
             # start game
             showGameScreen()
 
@@ -35,11 +36,30 @@ def showNewGameScreen(prevScrDet):
 
     return screenDetails
 
+def showLoadGameScreen(prevScrDet):
+    def LoadProfileInput(inputResponse):
+        if(inputResponse not in globals.currentGlobalConfig.currentScreenDetails.getAllCommands() and inputResponse in availableProfiles):
+            inputResponse = utils.sanitizeInput(inputResponse)
+            print(f"# Loading profile \"{inputResponse}\"...")
+            utils.loadGame(inputResponse)
+            # start game
+            showGameScreen()
+
+    screenDetails = ScreenDetails(Screen.SELECT_PROFILE, [constants.commandMenuBack, constants.commandExitGame, constants.commandList], LoadProfileInput, prevScrDet)
+    globals.currentGlobalConfig.currentScreenDetails = screenDetails
+    availableProfiles = utils.getAllProfiles()
+    if(len(availableProfiles)):
+        print(f"\n# Available profiles:")
+        utils.printOptions(availableProfiles)
+        print(f"\n> Select a name:")
+    else:
+        print("No profiles made yet!")
+
+    return screenDetails
+
 def showGameScreen(prevScrDet=None):
     def gameScreenInput(inputResponse):
         if(inputResponse not in globals.currentGlobalConfig.currentScreenDetails.screenCommands):
-            print("temp cmds")
-            print(globals.currentGlobalConfig.currentScreenDetails.screenTempCommands)
             if(inputResponse not in globals.currentGlobalConfig.currentScreenDetails.screenTempCommands):
                 print(f"You fail to do that. Try again.")
             else:
@@ -67,6 +87,8 @@ def showGameScreen(prevScrDet=None):
                 print("the inventory is not here yet. they said one-day delivery, absolute duffers. you'll see it when we see it. END OF DEMO")
             elif(inputResponse == constants.commandSaveGame):
                 print(f"> Saving to {globals.currentGlobalConfig.currentProfileName}...")
+                utils.saveGame()
+                print(f"> Save to {globals.currentGlobalConfig.currentProfileName} successful")
 
         # CHEAT: comment in to enable jumpoing to checkpoints by inputting its id
         # gameScreenUpdate(inputResponse)
@@ -79,8 +101,12 @@ def showGameScreen(prevScrDet=None):
     print(f"\n------------------------------\n--- YOUR ADVENTURE AWAITS! ---\n------------------------------")
     print()
 
-    screenDetails = ScreenDetails(Screen.GAME, [constants.commandSaveGame, constants.commandExitGame, constants.commandList], gameScreenInput, prevScrDet)
-    globals.currentGlobalConfig.currentScreenDetails = screenDetails
+    screenDetails = None
+    if(globals.currentGlobalConfig.currentScreenDetails.screenType != Screen.GAME):
+        screenDetails = ScreenDetails(Screen.GAME, [constants.commandSaveGame, constants.commandExitGame, constants.commandList], gameScreenInput, prevScrDet)
+        globals.currentGlobalConfig.currentScreenDetails = screenDetails
+    else:
+        screenDetails = globals.currentGlobalConfig.currentScreenDetails
     print(f"# General Commands:")
     for option in screenDetails.screenCommands:
         print(f"- {option}")

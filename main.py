@@ -6,13 +6,6 @@ import utils
 import screens
 
 def mainLoop():
-    globals.currentGlobalConfig = globals.GlobalConfig(
-        ScreenDetails(Screen.MAIN_MENU, [], None),
-        "=1",
-        {},
-        "1.1",
-        []
-    )
     globals.currentGlobalConfig.currentScreenDetails = screens.showMainMenu()
     while(globals.currentGlobalConfig.currentScreenDetails.screenType != constants.Screen.EXIT):
         # if(globals.currentGlobalConfig.currentScreenDetails.screenType == constants.Screen.MAIN_MENU):
@@ -29,6 +22,7 @@ def mainLoop():
 
             if(currentScreenDetails.inputProcessor):
                 if(inputResponse and len(inputResponse) > 0):
+                    print(f"non-empty inputProcessor with {currentScreenDetails.inputProcessor.__name__}")
                     currentScreenDetails.inputProcessor(inputResponse)
             inputResponse = utils.processInput()
             

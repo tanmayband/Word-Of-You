@@ -1,4 +1,5 @@
 from constants import ScreenDetails, Screen
+import json
 
 class GlobalConfig:
     currentScreenDetails = None
@@ -14,5 +15,11 @@ class GlobalConfig:
         self.currentChapterCheckpointId = currChpChkId
         self.currentChapterCheckpointOptions = currChpChkOpt
 
-currentGlobalConfig = None
+currentGlobalConfig = GlobalConfig(
+    ScreenDetails(Screen.MAIN_MENU, [], None),
+    "-1",
+    {},
+    "1.1",
+    []
+)
 isInventoryOpen = False

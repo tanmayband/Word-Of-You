@@ -4,6 +4,7 @@ import json
 import re
 import os
 import shutil
+import jsonpickle
 
 import globals
 import constants
@@ -130,17 +131,49 @@ def processGenericInput(action):
             print("--------")
             printOptions(globals.currentGlobalConfig.currentScreenDetails.screenCommands)
             print("--------")
+        # elif(action == constants.commandTest):
+        #     genericResponse = action
 
     return genericResponse
 
-def createNewProfile(profileName):
+def getAllProfiles():
     profilesRoot = "Profiles"
-    profileDirName = os.path.join(profilesRoot, f"profile_{profileName}")
-    if not os.path.exists(profileDirName):
-        os.makedirs(profileDirName)
-        profileGlobalsName = os.path.join(profileDirName,"globals.json")
-        f = open(profileGlobalsName,'x')
+    subfolders = [ f.name[8:] for f in os.scandir(profilesRoot) if f.is_dir() ]
+    subfolders.sort()
+    return subfolders
+
+def getProfileFolderPath():
+    profilesRoot = "Profiles"
+    profileDirPath = os.path.join(profilesRoot, f"profile_{globals.currentGlobalConfig.currentProfileName}")
+    return profileDirPath
+
+def getProfileConfigPath():
+    return os.path.join(getProfileFolderPath(),"globals.json")
+
+def createNewProfile(profileName):
+    globals.currentGlobalConfig.currentProfileName = profileName
+    profileDirPath = getProfileFolderPath()
+    if not os.path.exists(profileDirPath):
+        os.makedirs(profileDirPath)
+        profileGlobalsPath = getProfileConfigPath()
+        f = open(profileGlobalsPath,'x')
         f.close()
 
-# def save
+def convertToJSON(classObj):
+    return jsonpickle.encode(classObj)
 
+def saveGame():
+    jsonObj = convertToJSON(globals.currentGlobalConfig)
+    profileGlobalsPath = getProfileConfigPath()
+    with open(profileGlobalsPath, 'w') as f:
+        f.write(jsonObj)
+        f.close()
+
+def loadGame(profileName):
+    globals.currentGlobalConfig.currentProfileName = profileName
+    profileGlobalsPath = getProfileConfigPath()
+    with open(profileGlobalsPath, 'r') as f:
+        jsonObj = json.load(f)
+        globals.currentGlobalConfig = jsonpickle.decode(json.dumps(jsonObj))
+        print(globals.currentGlobalConfig.currentScreenDetails.inputProcessor)
+        f.close()
