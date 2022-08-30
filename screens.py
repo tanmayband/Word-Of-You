@@ -54,11 +54,12 @@ def showGameScreen(prevScrDet=None):
                     utils.printDescription(actionResponse)
                 else:
                     inputResponse = actionResponse
-                    gameScreenUpdate(inputResponse)
 
                 if(actionType == "once"):
                     checkpointData["options"].pop(optionIndex)
                     globals.currentGlobalConfig.currentScreenDetails.screenTempCommands = [option["optionText"] for option in checkpointData["options"]]
+      
+                gameScreenUpdate(inputResponse)
                 
         else:
             if(inputResponse == constants.commandOpenInventory):

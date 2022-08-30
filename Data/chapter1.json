@@ -41,7 +41,7 @@
         "description": ["Your palms sink into the hot sand as you push yourself upright, dirt tumbling down your clothes. They are torn and greasy. Your head feels like lead, and your brain is telling you about pain, but not from where. You try to remember what's happening when you realize the pain is coming from all over your body, as if a roadroller crawled over you.","You see your legs but you're sure they won't work for a good minute, but try anyways. What is happening? Where are you? As you struggle to your feet, you realize your pockets are filled with something. Stretching your aching back, you spot a broken motorboat in the distance, and a path into the trees ahead of you."],
         "options": [
             {
-                "optionText": "check",
+                "optionText": "check pockets",
                 "optionResponse": "1.4",
                 "optionType": "once"
             }

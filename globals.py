@@ -14,13 +14,5 @@ class GlobalConfig:
         self.currentChapterCheckpointId = currChpChkId
         self.currentChapterCheckpointOptions = currChpChkOpt
 
-currentGlobalConfig = GlobalConfig(
-    ScreenDetails(Screen.MAIN_MENU, [], None),
-    "=1",
-    {},
-    "1.1",
-    []
-)
-
-
+currentGlobalConfig = None
 isInventoryOpen = False
