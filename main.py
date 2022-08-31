@@ -22,7 +22,7 @@ def mainLoop():
 
             if(currentScreenDetails.inputProcessor):
                 if(inputResponse and len(inputResponse) > 0):
-                    print(f"non-empty inputProcessor with {currentScreenDetails.inputProcessor.__name__}")
+                    # print(f"non-empty inputProcessor with {currentScreenDetails.inputProcessor.__name__}")
                     currentScreenDetails.inputProcessor(inputResponse)
             inputResponse = utils.processInput()
             

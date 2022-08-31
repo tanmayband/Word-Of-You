@@ -4,7 +4,7 @@ import json
 import re
 import os
 import shutil
-import jsonpickle
+import dill
 
 import globals
 import constants
@@ -148,7 +148,7 @@ def getProfileFolderPath():
     return profileDirPath
 
 def getProfileConfigPath():
-    return os.path.join(getProfileFolderPath(),"globals.json")
+    return os.path.join(getProfileFolderPath(),"globals.txt")
 
 def createNewProfile(profileName):
     globals.currentGlobalConfig.currentProfileName = profileName
@@ -159,21 +159,27 @@ def createNewProfile(profileName):
         f = open(profileGlobalsPath,'x')
         f.close()
 
-def convertToJSON(classObj):
-    return jsonpickle.encode(classObj)
+def serializeObj(classObj):
+    # return jsonpickle.encode(classObj)
+    serialized = dill.dumps(classObj)
+    return serialized
+
+def deserializeObj(someBytes):
+    deserialized = dill.loads(someBytes)
+    return deserialized
 
 def saveGame():
-    jsonObj = convertToJSON(globals.currentGlobalConfig)
+    jsonObj = serializeObj(globals.currentGlobalConfig)
     profileGlobalsPath = getProfileConfigPath()
-    with open(profileGlobalsPath, 'w') as f:
+    with open(profileGlobalsPath, 'wb') as f:
         f.write(jsonObj)
         f.close()
 
 def loadGame(profileName):
     globals.currentGlobalConfig.currentProfileName = profileName
     profileGlobalsPath = getProfileConfigPath()
-    with open(profileGlobalsPath, 'r') as f:
-        jsonObj = json.load(f)
-        globals.currentGlobalConfig = jsonpickle.decode(json.dumps(jsonObj))
+    with open(profileGlobalsPath, 'rb') as f:
+        jsonObj = f.read()
+        globals.currentGlobalConfig = deserializeObj(jsonObj)
         print(globals.currentGlobalConfig.currentScreenDetails.inputProcessor)
         f.close()
