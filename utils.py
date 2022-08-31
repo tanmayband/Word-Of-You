@@ -160,7 +160,6 @@ def createNewProfile(profileName):
         f.close()
 
 def serializeObj(classObj):
-    # return jsonpickle.encode(classObj)
     serialized = dill.dumps(classObj)
     return serialized
 
@@ -169,17 +168,17 @@ def deserializeObj(someBytes):
     return deserialized
 
 def saveGame():
-    jsonObj = serializeObj(globals.currentGlobalConfig)
+    bytesObj = serializeObj(globals.currentGlobalConfig)
     profileGlobalsPath = getProfileConfigPath()
     with open(profileGlobalsPath, 'wb') as f:
-        f.write(jsonObj)
+        f.write(bytesObj)
         f.close()
 
 def loadGame(profileName):
     globals.currentGlobalConfig.currentProfileName = profileName
     profileGlobalsPath = getProfileConfigPath()
     with open(profileGlobalsPath, 'rb') as f:
-        jsonObj = f.read()
-        globals.currentGlobalConfig = deserializeObj(jsonObj)
+        bytesObj = f.read()
+        globals.currentGlobalConfig = deserializeObj(bytesObj)
         print(globals.currentGlobalConfig.currentScreenDetails.inputProcessor)
         f.close()
