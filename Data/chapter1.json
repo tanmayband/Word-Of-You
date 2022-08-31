@@ -69,7 +69,21 @@
     },
     "1.5": {
         "description": ["You see a smudged driving license, the name and photo unclear. Possibly yours? You've never been big on driving anyway. \"Metal death boxes\", you call them. \"That's a good band name\". Your spry moped is good enough for any destination in the world. Alas, it's probably in a different part of the planet right now, if this even is Earth. You don't know, you're doubting every second of existence.","Second is a cracked debit card. Your faithful debit card. How many shopping sprees and immoderate partying has it accompanied you! All those good times, except the worried calls from your CA. That chap could use some booze, you think. Ah, but look at it now, cracks all over like a cutting board. Even the tiny chip has broken. Yeah, this card's only future is to pry open doors. If they even have doors here. \"Door, he he\" you muse, \"funny word. Door. Dor. Duur. Duuuur.\" You're totally fine.","To your amusement, the last one is a playing card: A jack of spades. This isn't yours. Playing cards is for kids. Legends play UNO. You own neither. Maybe you ARE the jack, and if you had a spade right now, you'd dig yourself a cozy little pit of your length and make some sand blankets to go over it."],
-        "addToInventory": ["Driving License", "Debit Card (cracked)", "Playing Card (Jack of Spades)"],
+        "addToInventory": [
+            {
+                "itemName": "Driving License",
+                "itemDescription": "Your (?) driving license. You hate cars and driving and responsibility."
+            },
+            {
+                "itemName": "Debit Card (cracked)",
+                "itemDescription": "Your debit card's chip is cracked, probably for the good. No more late night impulse-shopping.",
+                "itemHealth": 2
+            },
+            {
+                "itemName": "Playing Card (Jack of Spades)",
+                "itemDescription": "Not your playing card. Not your UNO card either."
+            }
+        ],
         "addOptions": [
             {
                 "optionText": "open inventory",
@@ -81,7 +95,12 @@
     },
     "1.6": {
         "description": ["This is a lighter. Not yours, but one of the best things to find on yourself in the wild. The ultimate tool. It being wet, though, is a slight complication. \"Maybe it'll dry itself out, how do lighters work?\" you say to yourself.","There's a symbol on it, a kind of skull and bones, but the skull is a cocunut and the bones are snakes? You think the graphic designer is a lazy toadstool."],
-        "addToInventory": ["Lighter (wet) with coconut and snakes"],
+        "addToInventory": [
+            {
+                "itemName": "Lighter (wet)",
+                "itemDescription": "Has coconut and snakes graphic"
+            }
+        ],
         "addOptions": [
             {
                 "optionText": "open inventory",
@@ -93,7 +112,12 @@
     },
     "1.7": {
         "description": ["A knife? A whole frickin' KNIFE? How does a KNIFE get in someone's pants? This KNIFE got more game than everyone on this planet combined! Which wouldn't be saying much if this is not Earth and there's only one person on this planet, you. \"It still has more game than me\" you bemuse. \"Why do I think this is not Earth?\"","Not much more to say about the knife itself. Strong blade, but blunt to the cheek. Worn out plastic grip. \"Plastic, AHA!\" you shout. \"Earth!\" You need to stop."],
-        "addToInventory": ["Knife (blunt)"],
+        "addToInventory": [
+            {
+                "itemName": "Knife (blunt)",
+                "itemDescription": "You envy this knife. It gives you existential crisis."
+            }
+        ],
         "addOptions": [
             {
                 "optionText": "open inventory",
