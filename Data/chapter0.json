@@ -4,8 +4,8 @@
         "prompt": "What do you do?",
         "options": [
             {
-                "optionText": "open inventory",
-                "optionResponse": ["you open the inventory"],
+                "optionText": "add",
+                "optionResponse": "0.2",
                 "optionType": "persist"
             },
             {
@@ -18,6 +18,33 @@
                 "optionResponse": ["you try to use an item"],
                 "optionType": "persist"
             }
-        ]
+        ],
+        "addOptions": [
+            {
+                "optionText": "open inventory",
+                "optionResponse": ["you open the inventory"],
+                "optionType": "persist"
+            }
+        ],
+        "addOptionsTo": "0.1"
+    },
+    "0.2": {
+        "description": ["you add things to the inventory"],
+        "addToInventory": [
+            {
+                "itemName": "Driving License",
+                "itemDescription": "Your (?) driving license. You hate cars and driving and responsibility."
+            },
+            {
+                "itemName": "Debit Card (cracked)",
+                "itemDescription": "Your debit card's chip is cracked, probably for the good. No more late night impulse-shopping.",
+                "itemHealth": 2
+            },
+            {
+                "itemName": "Playing Card (Jack of Spades)",
+                "itemDescription": "Not your playing card. Not your UNO card either."
+            }
+        ],
+        "goToCheckpoint": "0.1"
     }
 }

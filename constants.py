@@ -1,5 +1,4 @@
 from enum import Enum
-import json
 
 class Screen(Enum):
     NONE, MAIN_MENU, SELECT_PROFILE, NEW_PROFILE, PAUSE_MENU, GAME, INVENTORY, EXIT = range(8)
@@ -40,18 +39,16 @@ class Inventory:
     items = {}
 
     def __init__(self, itemsList):
-        self.items = self.convertItemsListToDict(itemsList)
+        self.addItems(itemsList)
 
-    def convertItemsListToDict(self, itemsList):
-        itemsDict = {}
+    def addItems(self, itemsList):
         for item in itemsList:
+            itemObj = Item(item)
             itemName = item["itemName"]
-            if itemName in itemsDict:
-                itemsDict[itemName].append(item)
+            if itemName in self.items:
+                self.items[itemName].append(item)
             else:
-                itemsDict[itemName] = [item]
-
-        return itemsDict
+                self.items[itemName] = [item]
 
     def useItem(self, itemName):
         if (itemName not in self.items) or (len(self.items[itemName]) == 0):
@@ -60,17 +57,39 @@ class Inventory:
             itemFound = self.items[itemName][0]
             itemFound.useItem()
             return True
-        
+
+    def getAllItemNames(self):
+        return list(self.items)
+
+    def printInventory(self):
+        allItemNames = self.getAllItemNames()
+        allItemNames.sort()
+
+        print("\n===== INVENTORY =====")
+        for itemName in allItemNames:
+            numItems = len(self.items[itemName])
+            print(f"\n* {itemName.upper()} (x{numItems})")
+            if(numItems):
+                for item in self.items[itemName]:
+                    print(f"--- Uses left: {item['itemHealth']}")
+        print("\n=====================\n")
+
 
 class Item:
     itemName = ""
-    itemHealth = 0
     itemDescription = ""
+    itemHealth = 0
 
-    def __init__(self, itName, itDesc, itHealth=-1):
+    def makeItem(self, itName, itDesc, itHealth=-1):
         self.itemName = itName
         self.itemDescription = itDesc
         self.itemHealth = itHealth
+
+    def __init__(self, itObj):
+        if("itemHealth" not in itObj):
+            itObj["itemHealth"] = -1
+        self.makeItem(itObj["itemName"], itObj["itemDescription"])
+              
 
     def useItem(self):
         if(self.itemHealth > 0):

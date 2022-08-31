@@ -1,5 +1,4 @@
-from constants import ScreenDetails, Screen
-import json
+from constants import ScreenDetails, Screen, Inventory
 
 class GlobalConfig:
     currentScreenDetails = None
@@ -8,18 +7,22 @@ class GlobalConfig:
     currentChapterCheckpointId = "-1.1"
     currentChapterCheckpointOptions = []
 
-    def __init__(self, currScrDet, currChp, currChpDat, currChpChkId, currChpChkOpt):
+    currentInventory = None
+
+    def __init__(self, currScrDet, currChp, currChpDat, currChpChkId, currChpChkOpt, currInv):
         self.currentScreenDetails = currScrDet
         self.currentChapter = currChp
         self.currentChapterData = currChpDat
         self.currentChapterCheckpointId = currChpChkId
         self.currentChapterCheckpointOptions = currChpChkOpt
+        self.currentInventory = currInv
 
 currentGlobalConfig = GlobalConfig(
     ScreenDetails(Screen.MAIN_MENU, [], None),
     "-1",
     {},
-    "1.1",
-    []
+    "0.1",
+    [],
+    Inventory([])
 )
 isInventoryOpen = False

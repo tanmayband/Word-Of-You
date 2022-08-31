@@ -88,8 +88,9 @@ def showGameScreen(prevScrDet=None):
                 
         else:
             if(inputResponse == constants.commandOpenInventory):
-                globals.isInventoryOpen = True
-                print("the inventory is not here yet. they said one-day delivery, absolute duffers. you'll see it when we see it. END OF DEMO")
+                # globals.isInventoryOpen = True
+                globals.currentGlobalConfig.currentInventory.printInventory()
+                
             elif(inputResponse == constants.commandSaveGame):
                 print(f"> Saving to {globals.currentGlobalConfig.currentProfileName}...")
                 utils.saveGame()

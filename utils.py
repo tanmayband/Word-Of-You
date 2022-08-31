@@ -34,9 +34,10 @@ def addOptionsToScreen(newOptionsList):
             globals.currentGlobalConfig.currentScreenDetails.addScreenCommand(addOption["optionText"])
 
 def addToInventory(itemsList):
+    globals.currentGlobalConfig.currentInventory.addItems(itemsList)
     print("ADDED TO INVENTORY:")
-    for itemName in itemsList:
-        print(f"* {itemName}")
+    for item in itemsList:
+        print(f"* {item['itemName']}")
     print("")
 
 def loadChapter(chapterNum):
@@ -170,6 +171,7 @@ def deserializeObj(someBytes):
 
 def saveGame():
     bytesObj = serializeObj(globals.currentGlobalConfig)
+    print(globals.currentGlobalConfig.currentInventory.items)
     profileGlobalsPath = getProfileConfigPath()
     with open(profileGlobalsPath, 'wb') as f:
         f.write(bytesObj)
@@ -181,5 +183,5 @@ def loadGame(profileName):
     with open(profileGlobalsPath, 'rb') as f:
         bytesObj = f.read()
         globals.currentGlobalConfig = deserializeObj(bytesObj)
-        print(globals.currentGlobalConfig.currentScreenDetails.inputProcessor)
+        print(globals.currentGlobalConfig.currentInventory.items)
         f.close()
