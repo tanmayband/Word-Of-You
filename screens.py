@@ -23,16 +23,21 @@ def showNewGameScreen(prevScrDet):
     def MakeProfileInput(inputResponse):
         if(inputResponse not in globals.currentGlobalConfig.currentScreenDetails.getAllCommands()):
             inputResponse = utils.sanitizeInput(inputResponse)
-            print(f"# Creating profile \"{inputResponse}\"...")
-            utils.createNewProfile(inputResponse)
-            # start game
-            showGameScreen()
+            if(inputResponse in allProfiles):
+                print(f"Sorry! {inputResponse} is already taken. Try a different name.")
+            else:
+                print(f"# Creating profile \"{inputResponse}\"...")
+                utils.createNewProfile(inputResponse)
+                # start game
+                showGameScreen()
+            
 
     screenDetails = ScreenDetails(Screen.NEW_PROFILE, [constants.commandMenuBack, constants.commandExitGame, constants.commandList], MakeProfileInput, prevScrDet)
     globals.currentGlobalConfig.currentScreenDetails = screenDetails
     print(f"\n# Creating a new profile...")
     print(f"> Type a name:")
     print("(Only alphanumeric names allowed. Command names not allowed. \"list\" to find out.)")
+    allProfiles = utils.getAllProfiles()
 
     return screenDetails
 

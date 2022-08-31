@@ -1,0 +1,23 @@
+{
+    "0.1": {
+        "description": ["Welcome to testpad. Do whatever"],
+        "prompt": "What do you do?",
+        "options": [
+            {
+                "optionText": "open inventory",
+                "optionResponse": ["you open the inventory"],
+                "optionType": "persist"
+            },
+            {
+                "optionText": "test this",
+                "optionResponse": ["yes you test this"],
+                "optionType": "persist"
+            },
+            {
+                "optionText": "use x",
+                "optionResponse": ["you try to use an item"],
+                "optionType": "persist"
+            }
+        ]
+    }
+}

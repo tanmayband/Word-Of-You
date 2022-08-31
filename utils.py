@@ -158,6 +158,7 @@ def createNewProfile(profileName):
         profileGlobalsPath = getProfileConfigPath()
         f = open(profileGlobalsPath,'x')
         f.close()
+        saveGame()
 
 def serializeObj(classObj):
     serialized = dill.dumps(classObj)
