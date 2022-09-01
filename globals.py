@@ -6,7 +6,6 @@ class GlobalConfig:
     currentChapterData = {}
     currentChapterCheckpointId = "-1.1"
     currentChapterCheckpointOptions = []
-
     currentInventory = None
 
     def __init__(self, currScrDet, currChp, currChpDat, currChpChkId, currChpChkOpt, currInv):

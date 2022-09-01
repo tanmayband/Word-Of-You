@@ -109,7 +109,7 @@ def showGameScreen(prevScrDet=None):
 
     screenDetails = None
     if(globals.currentGlobalConfig.currentScreenDetails.screenType != Screen.GAME):
-        screenDetails = ScreenDetails(Screen.GAME, [constants.commandSaveGame, constants.commandExitGame, constants.commandList], gameScreenInput, prevScrDet)
+        screenDetails = ScreenDetails(Screen.GAME, [constants.commandSaveGame, constants.commandExitGame, constants.commandList, constants.commandPrintConfig], gameScreenInput, prevScrDet)
         globals.currentGlobalConfig.currentScreenDetails = screenDetails
     else:
         screenDetails = globals.currentGlobalConfig.currentScreenDetails
