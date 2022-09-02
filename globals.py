@@ -20,7 +20,7 @@ currentGlobalConfig = GlobalConfig(
     ScreenDetails(Screen.MAIN_MENU, [], None),
     "-1",
     {},
-    "0.1",
+    "1.1",
     [],
     Inventory([])
 )
