@@ -5,8 +5,8 @@ class Screen(Enum):
 
 class ScreenDetails:
     screenType = Screen.NONE
-    prevScreenDetails = Screen.NONE
-    nextScreenDetails = Screen.NONE
+    prevScreenDetails = None
+    nextScreenDetails = None
     screenCommands = []
     screenTempCommands = []
     inputProcessor = None
@@ -39,6 +39,7 @@ class Inventory:
     items = {}
 
     def __init__(self, itemsList):
+        self.items = {}
         self.addItems(itemsList)
 
     def addItems(self, itemsList):
@@ -80,16 +81,15 @@ class Item:
     itemDescription = ""
     itemHealth = 0
 
+    def __init__(self, itObj):
+        if("itemHealth" not in itObj):
+            itObj["itemHealth"] = -1
+        self.makeItem(itObj["itemName"], itObj["itemDescription"])  
+
     def makeItem(self, itName, itDesc, itHealth=-1):
         self.itemName = itName
         self.itemDescription = itDesc
         self.itemHealth = itHealth
-
-    def __init__(self, itObj):
-        if("itemHealth" not in itObj):
-            itObj["itemHealth"] = -1
-        self.makeItem(itObj["itemName"], itObj["itemDescription"])
-              
 
     def useItem(self):
         if(self.itemHealth > 0):
@@ -106,6 +106,7 @@ commandLoadGame = "load game"
 commandSaveGame = "save game"
 commandMenuBack = "back"
 commandTest = "test"
+commandPrintConfig = "print all"
 
-commandsGeneric = [commandExitGame, commandList, commandTest]
+commandsGeneric = [commandExitGame, commandList, commandPrintConfig]
 #, commandOpenInventory, commandCloseInventory, commandNewGame, commandLoadGame]

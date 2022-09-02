@@ -5,6 +5,7 @@ import re
 import os
 import shutil
 import dill
+import jsonpickle
 
 import globals
 import constants
@@ -132,6 +133,11 @@ def processGenericInput(action):
             print("--------")
             printOptions(globals.currentGlobalConfig.currentScreenDetails.screenCommands)
             print("--------")
+        elif(action == constants.commandPrintConfig):
+            configObjString = jsonpickle.encode(globals.currentGlobalConfig, unpicklable=False,max_depth=10)
+            print()
+            print(configObjString)
+            print()
         # elif(action == constants.commandTest):
         #     genericResponse = action
 
@@ -171,7 +177,6 @@ def deserializeObj(someBytes):
 
 def saveGame():
     bytesObj = serializeObj(globals.currentGlobalConfig)
-    print(globals.currentGlobalConfig.currentInventory.items)
     profileGlobalsPath = getProfileConfigPath()
     with open(profileGlobalsPath, 'wb') as f:
         f.write(bytesObj)
@@ -183,5 +188,4 @@ def loadGame(profileName):
     with open(profileGlobalsPath, 'rb') as f:
         bytesObj = f.read()
         globals.currentGlobalConfig = deserializeObj(bytesObj)
-        print(globals.currentGlobalConfig.currentInventory.items)
         f.close()

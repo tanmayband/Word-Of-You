@@ -6,7 +6,6 @@ class GlobalConfig:
     currentChapterData = {}
     currentChapterCheckpointId = "-1.1"
     currentChapterCheckpointOptions = []
-
     currentInventory = None
 
     def __init__(self, currScrDet, currChp, currChpDat, currChpChkId, currChpChkOpt, currInv):
@@ -21,7 +20,7 @@ currentGlobalConfig = GlobalConfig(
     ScreenDetails(Screen.MAIN_MENU, [], None),
     "-1",
     {},
-    "1.1",
+    "0.1",
     [],
     Inventory([])
 )
